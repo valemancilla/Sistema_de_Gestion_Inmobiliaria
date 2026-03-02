@@ -528,4 +528,4 @@ Cada tabla del modelo resolvió un problema concreto del diseño original: redun
 
 
 ## AUTORA 
-- valentina mancilla
+- valentina mancilla 
