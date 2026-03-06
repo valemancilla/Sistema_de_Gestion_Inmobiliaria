@@ -117,7 +117,6 @@ LIMIT 5;
 
 -- ================================================================
 -- VISTA 1: vista_propiedades_por_ciudad
--- Muestra propiedades agrupadas por ciudad con precio promedio
 -- Uso: Consulta de inventario por ubicación geográfica
 -- ================================================================
 
@@ -139,7 +138,6 @@ GROUP BY c.Ciudad_ID, c.Nombre_Ciudad, c.Departamento;
 
 -- ================================================================
 -- VISTA 2: vista_agentes_propiedades
--- Muestra información de agentes con propiedades administradas
 -- Uso: Reporte de agentes y sus propiedades
 -- ================================================================
 
@@ -162,7 +160,6 @@ GROUP BY age.Agente_ID, per.Nombre, per.Apellido, c.Nombre_Ciudad;
 
 -- ================================================================
 -- ÍNDICES DE OPTIMIZACIÓN
--- Índices simples y compuestos para mejorar rendimiento
 -- ================================================================
 
 -- Índice compuesto: propiedades por ciudad y estado
