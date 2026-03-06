@@ -1,0 +1,124 @@
+-- ================================================================
+-- EXAMEN: CONSULTAS SQL - SISTEMA DE GESTIÓN INMOBILIARIA
+-- ================================================================
+-- Este archivo contiene 5 consultas SQL que analizan el 
+-- rendimiento y características de las propiedades en arriendo y venta.
+-- ================================================================
+
+USE inmobiliaria_db;
+
+-- ================================================================
+-- CONSULTA 1: Precio promedio, máximo y mínimo de propiedades 
+--              agrupadas por ciudad.
+-- ================================================================
+-- Utiliza: AVG, MAX, MIN, GROUP BY
+-- ================================================================
+
+SELECT 
+    c.Nombre_Ciudad AS Ciudad,
+    ROUND(AVG(p.Precio_Propiedad), 2) AS Precio_Promedio,
+    MAX(p.Precio_Propiedad) AS Precio_Maximo,
+    MIN(p.Precio_Propiedad) AS Precio_Minimo
+FROM Propiedad p
+INNER JOIN Barrio b ON p.Barrio_ID = b.Barrio_ID
+INNER JOIN Ciudad c ON b.Ciudad_ID = c.Ciudad_ID
+GROUP BY c.Ciudad_ID, c.Nombre_Ciudad
+ORDER BY c.Nombre_Ciudad;
+
+
+-- ================================================================
+-- CONSULTA 2: Listar las propiedades disponibles para arriendo 
+--             cuyo precio esté entre 800000 y 2000000.
+-- ================================================================
+-- Utiliza: BETWEEN, WHERE, AND
+-- Nota: Las propiedades disponibles tienen EstadoP_ID = 'EP-01'
+--       Los precios de arriendo están en la tabla ContratoArriendo
+-- ================================================================
+
+SELECT 
+    p.Propiedad_ID,
+    p.Direccion,
+    p.Precio_Propiedad,
+    ep.Descripcion AS Estado,
+    b.Nombre_Barrio AS Barrio,
+    c.Nombre_Ciudad AS Ciudad
+FROM Propiedad p
+INNER JOIN EstadoPropiedad ep ON p.EstadoP_ID = ep.EstadoP_ID
+INNER JOIN Barrio b ON p.Barrio_ID = b.Barrio_ID
+INNER JOIN Ciudad c ON b.Ciudad_ID = c.Ciudad_ID
+WHERE p.EstadoP_ID = 'EP-01' 
+  AND p.Precio_Propiedad BETWEEN 800000 AND 2000000
+ORDER BY p.Precio_Propiedad;
+
+
+-- ================================================================
+-- CONSULTA 3: Mostrar las propiedades que incluyen la palabra 
+--             "Parque" en su dirección.
+-- ================================================================
+-- Utiliza: LIKE '%Parque%'
+-- ================================================================
+
+SELECT 
+    p.Propiedad_ID,
+    p.Direccion,
+    p.Precio_Propiedad,
+    tp.Descripcion AS Tipo_Propiedad,
+    ep.Descripcion AS Estado,
+    b.Nombre_Barrio AS Barrio,
+    c.Nombre_Ciudad AS Ciudad
+FROM Propiedad p
+INNER JOIN TipoPropiedad tp ON p.TipoP_ID = tp.TipoP_ID
+INNER JOIN EstadoPropiedad ep ON p.EstadoP_ID = ep.EstadoP_ID
+INNER JOIN Barrio b ON p.Barrio_ID = b.Barrio_ID
+INNER JOIN Ciudad c ON b.Ciudad_ID = c.Ciudad_ID
+WHERE p.Direccion LIKE '%Parque%';
+
+
+-- ================================================================
+-- CONSULTA 4: Listar el nombre del agente inmobiliario, la cantidad 
+--             de propiedades que administra y la ciudad principal 
+--             donde las tiene.
+-- ================================================================
+-- Utiliza: JOIN, GROUP BY, ORDER BY
+-- ================================================================
+
+SELECT 
+    per.Nombre AS Nombre_Agente,
+    per.Apellido AS Apellido_Agente,
+    COUNT(p.Propiedad_ID) AS Cantidad_Propiedades,
+    c.Nombre_Ciudad AS Ciudad_Principal
+FROM Agentes age
+INNER JOIN Personas per ON age.Persona_ID = per.Persona_ID
+INNER JOIN Contratos con ON age.Agente_ID = con.Agente_ID
+INNER JOIN Propiedad p ON con.Propiedad_ID = p.Propiedad_ID
+INNER JOIN Barrio b ON p.Barrio_ID = b.Barrio_ID
+INNER JOIN Ciudad c ON b.Ciudad_ID = c.Ciudad_ID
+GROUP BY age.Agente_ID, per.Nombre, per.Apellido, c.Nombre_Ciudad
+ORDER BY Cantidad_Propiedades DESC, c.Nombre_Ciudad;
+
+
+-- ================================================================
+-- CONSULTA 5: Obtener las 5 propiedades más costosas y su 
+--             respectivo cliente si ya fueron arrendadas.
+-- ================================================================
+-- Utiliza: JOIN, ORDER BY DESC, LIMIT 5
+-- ================================================================
+
+SELECT 
+    p.Propiedad_ID,
+    p.Direccion,
+    p.Precio_Propiedad,
+    con.Tipo_Contrato,
+    per_cli.Nombre AS Nombre_Cliente,
+    per_cli.Apellido AS Apellido_Cliente,
+    per_cli.Email AS Email_Cliente,
+    con.Fecha_Contrato
+FROM Propiedad p
+INNER JOIN Contratos con ON p.Propiedad_ID = con.Propiedad_ID
+INNER JOIN Clientes cli ON con.Cliente_ID = cli.Cliente_ID
+INNER JOIN Personas per_cli ON cli.Persona_ID = per_cli.Persona_ID
+WHERE con.Tipo_Contrato = 'Arriendo'
+ORDER BY p.Precio_Propiedad DESC
+LIMIT 5;
+
+
