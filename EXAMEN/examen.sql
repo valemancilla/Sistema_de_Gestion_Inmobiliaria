@@ -1,9 +1,4 @@
--- ================================================================
--- EXAMEN: CONSULTAS SQL - SISTEMA DE GESTIÓN INMOBILIARIA
--- ================================================================
--- Este archivo contiene 5 consultas SQL que analizan el 
--- rendimiento y características de las propiedades en arriendo y venta.
--- ================================================================
+
 
 USE inmobiliaria_db;
 
@@ -31,8 +26,6 @@ ORDER BY c.Nombre_Ciudad;
 --             cuyo precio esté entre 800000 y 2000000.
 -- ================================================================
 -- Utiliza: BETWEEN, WHERE, AND
--- Nota: Las propiedades disponibles tienen EstadoP_ID = 'EP-01'
---       Los precios de arriendo están en la tabla ContratoArriendo
 -- ================================================================
 
 SELECT 
@@ -120,5 +113,10 @@ INNER JOIN Personas per_cli ON cli.Persona_ID = per_cli.Persona_ID
 WHERE con.Tipo_Contrato = 'Arriendo'
 ORDER BY p.Precio_Propiedad DESC
 LIMIT 5;
+
+
+-- ==================================================
+-- Script de base de datos con los datos solicitados.
+-- ==================================================
 
 

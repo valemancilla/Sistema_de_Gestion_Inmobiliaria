@@ -415,13 +415,14 @@ INSERT INTO UsuarioSistema (Usuario_ID, Persona_ID, Rol_ID, NombreUsuario) VALUE
 -- BLOQUE 11: DML — PROPIEDADES
 -- ================================================================
 
-INSERT INTO Propiedad (Propiedad_ID, Direccion, Precio_Propiedad, TipoP_ID, EstadoP_ID, Barrio_ID) VALUES
-('PROP-01', 'Cra 10 #45-20',   250000000.00, 'TP-01', 'EP-02', 'BAR-01'),
+IINSERT INTO Propiedad (Propiedad_ID, Direccion, Precio_Propiedad, TipoP_ID, EstadoP_ID, Barrio_ID) VALUES
+('PROP-01', 'Cra 10 #45-20 ',250000000.00, 'TP-01', 'EP-02', 'BAR-01'),
 ('PROP-02', 'Calle 35 #12-05', 320000000.00, 'TP-02', 'EP-03', 'BAR-02'),
 ('PROP-03', 'Av 27 #60-15',    180000000.00, 'TP-03', 'EP-02', 'BAR-03'),
 ('PROP-04', 'Cra 52 #80-30',   450000000.00, 'TP-02', 'EP-03', 'BAR-04'),
-('PROP-05', 'Calle 9 #22-10',  200000000.00, 'TP-01', 'EP-01', 'BAR-05'),
-('PROP-06', 'Cra 15 #33-40',   280000000.00, 'TP-03', 'EP-03', 'BAR-06');
+('PROP-05', 'Calle 9 #22-10',  800000, 'TP-01', 'EP-01', 'BAR-05'),
+('PROP-06', 'Cra 15 #33-40',   280000000.00, 'TP-03', 'EP-03', 'BAR-06'),
+('PROP-07','Parque del cafe', 200000000.00,'TP-03','EP-01','BAR-01');
 
 -- ================================================================
 -- BLOQUE 12: DML — CONTRATOS, ARRIENDOS Y VENTAS
